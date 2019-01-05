@@ -1,5 +1,5 @@
 var Stack = function() {
-  const someInstance = {top: 0, storage: {}};
+  let someInstance = {top: 0, storage: {}};
   _.extend(someInstance, stackMethods);
   return someInstance;
 };
@@ -7,13 +7,13 @@ var Stack = function() {
 var stackMethods = {
   push: function(value) {
     this.top++;
-    this.storage[top] = value;
+    this.storage[this.top] = value;
   },
   pop: function() {
-    if (this.top) {
+    if (this.top < 1) {
       return 0;
     }
-    const poppedVar = this.storage[top];
+    const poppedVar = this.storage[this.top];
     this.top--;
     return poppedVar;
   },
