@@ -1,12 +1,11 @@
 var Queue = function() {
   var someInstance = function(valueToStore) {
     const obj = {valueToStore: valueToStore};
-    // let instanceBehind;//set in storage
     return obj;
   };
 
   var front = 1;
-  var back = 0;
+  var back = 1;
 
   // Use an object with numeric keys to store values
   var storage = {
@@ -15,16 +14,19 @@ var Queue = function() {
   // Implement the methods below
 
   someInstance.enqueue = function(value) {
-    if (back > front) {
-      console.log('You messed up. Empty queue.');
-    }
-    someInstance.storage[back + 1];
+    someInstance.storage[back] = value;
+    back++;
   };
 
   someInstance.dequeue = function() {
+    if (back <= front) {
+      return 0;
+    }
+    front++;
   };
 
   someInstance.size = function() {
+    return (back <= front) ? 0 : back - front;
   };
 
   return someInstance;
