@@ -19,7 +19,7 @@ treeMethods.addChild = function(value) {
 treeMethods.contains = function(target) {
   let isTrue = false;
   const searchTree = function(tree) {
-    if (isTrue === true || tree.children.length === 0) {
+    if (isTrue === true) {
       return;
     } else if (target === tree.value) {
       isTrue = true; 
@@ -37,4 +37,6 @@ treeMethods.contains = function(target) {
 
 /*
  * Complexity: What is the time complexity of the above functions?
+ * addChild: Constant Time
+ * contains: Linear Time
  */
