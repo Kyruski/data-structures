@@ -28,6 +28,19 @@ var LinkedList = function() {
   };
 
   list.contains = function(target) {
+    if (this.head === null) {
+      return 0;
+    }
+    const searchList = function(node) {
+      if (node.value === target) {
+        return true;
+      } else if (node.next === null) {
+        return false;
+      } else {
+        return searchList(node.next);
+      }
+    };
+    return searchList(this.head);
   };
 
   return list;
