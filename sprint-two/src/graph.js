@@ -18,6 +18,7 @@ Graph.prototype.addNode = function(node) {
 
 // Return a boolean value indicating if the value passed to contains is represented in the graph.
 Graph.prototype.contains = function(node) {
+  const runType = arguments[1] || 0;
   let isTrue = false;
   const visitedArray = [];
   const searchGraph = function(currentNode) {
@@ -26,7 +27,11 @@ Graph.prototype.contains = function(node) {
     }
     visitedArray.push(currentNode);
     if (currentNode.value === node) {
-      isTrue = true;
+      if (runType === 1) {
+        isTrue = currentNode;
+      } else {
+        isTrue = true;
+      }
     } else {
       for (let i = 0; i < currentNode.edges.length; i++) {
         if (visitedArray.contains(currentNode.edges[i])) {
@@ -43,6 +48,16 @@ Graph.prototype.contains = function(node) {
 
 // Removes a node from the graph.
 Graph.prototype.removeNode = function(node) {
+  if (this.edges.length === 0) {
+    this.value = null;
+  } else {
+    let desiredNode = this.contains(node, 1);
+    for (let i = 0; i < desiredNode.edges.length; i++) {
+      const index = desiredNode[i].edges.indexOf(node);
+      desiredNode[i].edges.splice(index, 1);
+    }
+    desiredNode.edges = [];
+  }
 };
 
 // Returns a boolean indicating whether two specified nodes are connected.  Pass in the values contained in each of the two nodes.
