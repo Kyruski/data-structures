@@ -54,6 +54,25 @@ HashTable.prototype.remove = function(k) {
   }
 };
 
+HashTable.prototype.resize = function(size) {
+  this._limit = size;
+  const holdingArray = [];
+  for (let i = 0; i < this._storage.length; i ++) {
+    for (let j = 0; j < this._storage[i].length; j++) {
+      holdingArray.push(this._storage[i][j]);
+    }
+  }
+  this._storage = LimitedArray(this._limit);
+  for (let i = 0; i < holdingArray.length; i++) {
+    this.insert(holdingArray[i][0], holdingArray[i][1]);
+  }
+};
+
+HashTable.prototype.needsResizing = function() {
+  return;
+  // if (this.items =)
+};
+
 
 
 /*
