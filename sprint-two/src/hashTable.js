@@ -10,7 +10,7 @@ HashTable.prototype.getBucket = function(k) {
   const hashIndex = getIndexBelowMaxForKey(k, this._limit);
   const bucket = this._storage.get(hashIndex);
   return [bucket || [], hashIndex];
-}
+};
 
 HashTable.prototype.insert = function(k, v) {
   let wasFound = false;
@@ -26,7 +26,7 @@ HashTable.prototype.insert = function(k, v) {
   }
   if (!wasFound) {
     returnArray[0].push([k, v]);
-      this.items++;
+    this.items++;
   }
   this._storage.set(returnArray[1], returnArray[0]);
 };
@@ -59,9 +59,9 @@ HashTable.prototype.remove = function(k) {
 /*
  * Complexity: What is the time complexity of the above functions?
  * getBucket: Constant
- * insert: Linear/Constant
- * retrieve: Linear/Consant
- * remove: Linear/Constant
+ * insert: Linear/Constant (only iterates buckets)
+ * retrieve: Linear/Consant (only iterates buckets)
+ * remove: Linear/Constant (only iterates buckets)
  */
 
 
