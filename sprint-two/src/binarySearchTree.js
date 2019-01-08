@@ -1,65 +1,63 @@
 var BinarySearchTree = function(value) {
   const obj = {};
   _.extend(obj, BinarySearchTree.methods);
+  obj.left;
+  obj.right;
   obj.value = value;
-  obj.left = undefined;
-  obj.right = undefined;
   return obj;
 };
 
 BinarySearchTree.methods = {
-  
+
+  insert: function(value) {
+
+    const findInsertion = function(currentNode) {
+      if (value > currentNode.value) {
+        if (currentNode.right) {
+          findInsertion(currentNode.right);
+        } else {
+          currentNode.right = BinarySearchTree(value);
+        }
+      } else {
+        if (currentNode.left) {
+          findInsertion(currentNode.left);
+        } else {
+          currentNode.left = BinarySearchTree(value);
+        }
+      }
+    };
+    findInsertion(this);
+  },
+
   contains: function(value) {
-    let valueFound = false;
-    const searchTree = function(tree) {
-      if (tree.value === value) {
-        valueFound = true;
+    let isFound = false;
+    const searchTree = function(currentNode) {
+      if (currentNode.value === value) {
+        isFound = true;
         return;
-      }
-      if (tree.left) {
-        searchTree(tree.left);
-      }
-      if (valueFound) {
+      } else if (value < currentNode.value && currentNode.left) {
+        searchTree(currentNode.left);
+      } else if (isFound) {
         return;
-      }
-      if (tree.right) {
-        searchTree(tree.right);
+      } else if (value > currentNode.value && currentNode.right) {
+        searchTree(currentNode.right);
       }
     };
     searchTree(this);
-    return valueFound;
+    return isFound;
   },
 
   depthFirstLog: function(cb) {
-    const modifyTree = function(tree) {
-      cb(tree.value);
-      if (tree.left) {
-        modifyTree(tree.left);
+    const forEachNode = function(currentNode) {
+      cb(currentNode.value);
+      if (currentNode.left) {
+        forEachNode(currentNode.left);
       }
-      if (tree.right) {
-        modifyTree(tree.right);
-      }
-    };
-    modifyTree(this);
-  },
-
-  insert: function(value) {
-    const insertInTree = function(tree) {
-      if (value < tree.value) {
-        if (tree.left) {
-          insertInTree(tree.left);
-        } else {
-          tree.left = BinarySearchTree(value);
-        }
-      } else {
-        if (tree.right) {
-          insertInTree(tree.right);
-        } else {
-          tree.right = BinarySearchTree(value);
-        }
+      if (currentNode.right) {
+        forEachNode(currentNode.right);
       }
     };
-    insertInTree(this);
+    forEachNode(this);
   }
 
 };
@@ -67,7 +65,4 @@ BinarySearchTree.methods = {
 
 /*
  * Complexity: What is the time complexity of the above functions?
- * contains: Logarithmic
- * depthFirstLog: Linear
- * insert: Logarithmic
  */
