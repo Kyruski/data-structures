@@ -78,14 +78,50 @@ Graph.prototype.addEdge = function(fromNode, toNode) {
 
 // Remove an edge between any two specified (by value) nodes.
 Graph.prototype.removeEdge = function(fromNode, toNode) {
+  const toNodeContainsResult = this.contains(toNode, 1);
+  const toNodeDesiredNode = toNodeContainsResult[0];
+  const fromNodeContainsResult = this.contains(fromNode, 1);
+  const fromNodeDesiredNode = fromNodeContainsResult[0];
+  const findIndex = function(node, removeNode) {
+    for (let i = 0; i < node.edges.length; i++) {
+      if (node.edges[i].value === removeNode) {
+        node.edges.splice(i, 1);
+      }
+    }
+  };
+  findIndex(fromNodeDesiredNode, toNode);
+  findIndex(toNodeDesiredNode, fromNode);
+  
+  // let fromIndex, toIndex, fromGraph, toGraph;
+  // const findIndexAndNode = function(node, index, graph) {
+  //   for (let i = 0; i < this.nodes.length; i++) {
+  //     if (this.nodes[i].value === node) {
+  //       index = i;
+  //       graph = this.nodes[i];
+  //     }
+  //   }
+  // }
+  // findIndexAndNode(fromNode, fromIndex, fromGraph).call(this);
+  // findIndexAndNode(toNode, toIndex, toGraph).call(this);
+  // console.log(fromIndex);
 };
 
 // Pass in a callback which will be executed on each node of the graph.
 Graph.prototype.forEachNode = function(cb) {
+  _.each(this.nodes, function(node) {
+    cb(node.value);
+  });
 };
 
 /*
  * Complexity: What is the time complexity of the above functions?
+ * addNode: Constant
+ * contains: Linear
+ * removeNode: Quadratic
+ * hasEdges: Quadratic
+ * addEdge: Linear
+ * removeEdge: Linear
+ * forEachNode: Linear
  */
 
 
